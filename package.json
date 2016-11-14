@@ -1,0 +1,31 @@
+{
+  "name": "go-onboarding",
+  "version": "1.0.0",
+  "description": "GO Digital onboarding",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Vijaya Sankar N",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bower": "^1.8.0",
+    "chalk": "^1.1.3",
+    "compression": "^1.6.2",
+    "connect-session-sequelize": "^4.1.0-beta.1",
+    "consolidate": "^0.14.4",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "fs": "0.0.1-security",
+    "glob": "^7.1.1",
+    "lodash": "^4.16.6",
+    "path": "^0.12.7",
+    "pg": "^6.1.0",
+    "sequelize": "^3.25.0",
+    "swig": "^1.4.2",
+    "validator": "^6.1.0"
+  }
+}

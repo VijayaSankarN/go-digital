@@ -1,0 +1,15 @@
+{
+	"name": "G/O Onboarding",
+	"description": "GO Digital onboarding",
+	"website": "",
+	"repository": "",
+	"logo": "",
+	"addons": [ {
+		"plan": "heroku-postgresql:hobby-dev"
+	}, {
+		"plan": "herokuconnect:demo"
+	} ],
+	"buildpacks": [ {
+		"url": "heroku/nodejs"
+	} ]
+}
