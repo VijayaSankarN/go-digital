@@ -10,7 +10,13 @@ module.exports = {
       js: [
       "public/lib/jquery/dist/jquery.min.js",
       "public/lib/bootstrap/dist/js/bootstrap.min.js",
-      "public/lib/jquery-backstretch-2/jquery.backstretch.min.js"
+      "public/lib/jquery-backstretch-2/jquery.backstretch.min.js",
+      'public/lib/angular/angular.js',
+      'public/lib/angular-resource/angular-resource.js',
+      'public/lib/angular-animate/angular-animate.js',
+      'public/lib/angular-messages/angular-messages.js',
+      'public/lib/angular-ui-router/release/angular-ui-router.js',
+      'public/lib/angular-sanitize/angular-sanitize.js'
       ]
     },
     css: [
@@ -19,7 +25,11 @@ module.exports = {
     "modules/core/client/css/style.css"
     ],
     js: [
-    "modules/core/client/js/scripts.js"
+    "modules/core/client/js/scripts.js",
+    'modules/core/client/app/config.js',
+    'modules/core/client/app/init.js',
+    'modules/*/client/*.js',
+    'modules/*/client/**/*.js'
     ]
   },
   server: {
