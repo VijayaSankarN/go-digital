@@ -84,3 +84,12 @@ button.btn.btn-submit:active:focus, button.btn.btn-submit.active:focus { backgro
 button.btn.btn-previous,
 button.btn.btn-previous:focus,
 button.btn.btn-previous:active:focus, button.btn.btn-previous.active:focus { background: #bbb; }
+
+button.btn-xs {
+    padding: 3px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    min-width: 0px;
+    height: 25px;
+}

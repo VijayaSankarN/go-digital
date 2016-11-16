@@ -87,11 +87,98 @@ img { max-width: 100%; }
 .f1-step.activated p { color: #f35b3f; }
 .f1-step.active p { color: #f35b3f; }
 
+h4.title-header { color: #f35b3f; border-bottom: 1px dashed; text-align: left;}
+
+table th {
+	font-weight: 500;
+}
+
 /*.f1 fieldset { display: none; text-align: left; }*/
 
 .f1-buttons { text-align: right; }
 
 .f1 .input-error { border-color: #f35b3f; }
+
+.width-10{
+	width: 10%;
+}
+
+.width-20{
+	width: 20%;
+}
+
+.width-30{
+	width: 30%;
+}
+
+.width-40{
+	width: 40%;
+}
+
+.width-50{
+	width: 50%;
+}
+
+.width-60{
+	width: 60%;
+}
+
+.width-70{
+	width: 70%;
+}
+
+.width-80{
+	width: 80%;
+}
+
+.width-90{
+	width: 90%;
+}
+
+.width-100{
+	width: 100%;
+}
+
+.height-10{
+	height: 10px;
+}
+
+.height-20{
+	height: 20px;
+}
+
+.height-30{
+	height: 30px;
+}
+
+.height-40{
+	height: 40px;
+}
+
+.height-50{
+	height: 50px;
+}
+
+.height-60{
+	height: 60px;
+}
+
+.height-70{
+	height: 70px;
+}
+
+.height-80{
+	height: 80px;
+}
+
+.height-90{
+	height: 90px;
+}
+
+.height-100{
+	height: 100px;
+}
+
 
 
 

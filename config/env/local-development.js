@@ -17,7 +17,7 @@
 module.exports = {
   db: {
     options: {
-      database: 'pean_dev',
+      database: 'gopean',
       password: 'admin',
       username: 'postgres'
     }

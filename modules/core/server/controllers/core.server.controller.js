@@ -12,11 +12,7 @@ exports.renderIndex = function (req, res) {
   // TODO-GO
   if (req.user) {
     safeUserObject = {
-      displayName: validator.escape(req.user.displayName),
-      username: validator.escape(req.user.username),
-      email: validator.escape(req.user.email),
-      lastName: validator.escape(req.user.lastName),
-      firstName: validator.escape(req.user.firstName),
+      username: validator.escape(req.user.username)
     };
   }
 

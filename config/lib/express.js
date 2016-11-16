@@ -11,9 +11,8 @@ var bodyParser = require('body-parser'),
   express = require('express'),
   path = require('path'),
   session = require('express-session'), 
+  methodOverride = require('method-override'),
   SequelizeStore = require('connect-session-sequelize')(session.Store);
-
-
 
 /**
  * Initialize local variables
@@ -30,11 +29,14 @@ module.exports.initLocalVariables = function(app) {
   app.locals.favicon = config.favicon;
 };
 
-
 /**
  * Initialize application middleware
  */
 module.exports.initMiddleware = function(app) {
+  // Showing stack errors
+  app.set('showStackError', true);
+  // Enable jsonp
+  app.enable('jsonp callback');
   
   // Should be placed before express.static
   app.use(compress({
@@ -58,7 +60,7 @@ module.exports.initMiddleware = function(app) {
   }));
   
   app.use(bodyParser.json());
-  
+  app.use(methodOverride());
   app.use(cookieParser());
 };
 
@@ -102,6 +104,15 @@ module.exports.initSession = function(app, db) {
 };
 
 /**
+* Invoke modules server configuration
+*/
+module.exports.initModulesConfiguration = function(app, db) {
+  config.files.server.configs.forEach(function(configPath) {
+    require(path.resolve(configPath))(app, db);
+  });
+};
+
+/**
  * Configure the modules static routes
  */
 module.exports.initModulesClientRoutes = function(app) {
@@ -124,6 +135,31 @@ module.exports.initModulesServerRoutes = function(app) {
   });
 };
 
+/**
+* Configure the modules ACL policies
+*/
+module.exports.initModulesServerPolicies = function(app) {
+  // Globbing policy files
+  config.files.server.policies.forEach(function(policyPath) {
+    require(path.resolve(policyPath)).invokeRolesPolicies();
+  });
+};
+
+/**
+* Configure error handling
+*/
+module.exports.initErrorRoutes = function(app) {
+  app.use(function(err, req, res, next) {
+    // If the error object doesn't exists
+    if (!err) {
+      return next();
+    }
+    // Log it
+    console.error(err.stack);
+    // Redirect to error page
+    res.redirect('/server-error');
+  });
+};
 
 /**
  * Initialize the Express application
@@ -144,11 +180,17 @@ module.exports. init = function(db) {
   // Initialize Express session
   this.initSession(app, db);
 
+  // Initialize Modules configuration
+  this.initModulesConfiguration(app);
+
   // Initialize modules static client routes, before session!
   this.initModulesClientRoutes(app);
 
   // Initialize modules server routes
   this.initModulesServerRoutes(app);
+
+  // Initialize error routes
+  this.initErrorRoutes(app);
 
   return app;
 };
