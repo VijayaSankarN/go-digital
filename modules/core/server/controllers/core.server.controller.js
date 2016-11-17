@@ -9,10 +9,11 @@ exports.renderIndex = function (req, res) {
 
   var safeUserObject = null;
 
-  // TODO-GO
   if (req.user) {
     safeUserObject = {
-      username: validator.escape(req.user.username)
+      username: validator.escape(req.user.dataValues.username),
+      sfid: validator.escape(req.user.dataValues.sfid),
+      userID: req.user.dataValues.site_user_id
     };
   }
 

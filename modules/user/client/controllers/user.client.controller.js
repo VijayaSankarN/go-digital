@@ -7,8 +7,6 @@ angular.module('user').controller('AuthenticationController', ['$scope', '$state
     $scope.error = $location.search().err;
     $scope.authentication = Authentication;
 
-    console.log("aaa",Authentication);
-
     // TODO-GO
     // Authentication in function parameter
 
@@ -28,15 +26,19 @@ angular.module('user').controller('AuthenticationController', ['$scope', '$state
 
       $http.post('/api/user/verify', $scope.credentials).success(function (response) {
 
-
-        alert(response);
         // If successful we assign the response to the global user model
-        $scope.authentication.user = response;
+        $scope.authentication.user = Authentication.user = response;
 
         $state.go('dashboard');
       }).error(function (response) {
         $scope.error = response.message;
       });
+    };
+
+    $scope.errorClass = function (control, method) {
+        if ($scope.userForm[control].$invalid && !$scope.userForm[control].$pristine) {
+            return (method == "class" ? 'has-error' : true);
+        }
     };
   }
 ]);

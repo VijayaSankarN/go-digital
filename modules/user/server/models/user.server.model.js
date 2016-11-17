@@ -43,10 +43,11 @@ module.exports = function(sequelize, DataTypes) {
        * @param  {[type]} password [description]
        * @return {[type]}          [description]
        */
-      authenticate: function(user, password) {
-        console.log("usernama : ",user)
-        console.log("passsss : ",password)
+      authenticatePass: function(user, password) {
         return user.dataValues.password === password;
+      },
+      authenticateUser: function(user, username) {
+        return user.dataValues.username === username;
       }
     }
   });

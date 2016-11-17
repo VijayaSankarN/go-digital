@@ -21,7 +21,12 @@ exports.verify = function(req, res, next) {
         if (err) {
           res.status(400).send(err);
         } else {
-          return res.json(user);
+          var userDetails = {
+            userID:user.dataValues.site_user_id,
+            username:user.dataValues.username,
+            sfid:user.dataValues.sfid
+          };
+          return res.json(userDetails);
         }
       });
     }

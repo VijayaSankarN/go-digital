@@ -10,7 +10,7 @@ angular.module('onboard').config(['$stateProvider', '$urlRouterProvider',
         location: false
       });
     });
-console.log("asdf");
+    
     // Home state routing
     $stateProvider
     .state('onboard', {

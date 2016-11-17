@@ -1,6 +1,6 @@
 <div class="row" ng-controller="AuthenticationController">
 	<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
-		<form role="form" name="userForm" ng-submit="verify(userForm.$valid)" method="post" class="f1" autocomplete="off">
+		<form role="form" name="userForm" ng-submit="verify(userForm.$valid)" method="post" class="f1" novalidate autocomplete="off">
 
 			<h3>G/O Digital</h3>
 			<p>On-Boarding Login Form</p>
@@ -19,20 +19,20 @@
 				<div class="form-group">
 					<label for="username" class="sr-only">username</label>
 					<input type="text" name="username" placeholder="Enter username" ng-model="credentials.username" class="form-control" id="username" required>
-					<div ng-messages="userForm.username.$error" role="alert">
-						<p class="help-block error-text" ng-message="required">Username is required</p>
+					<div ng-show="errorClass('username')" ng-messages="userForm.username.$error" role="alert">
+						<p class="help-block error-text has-success" ng-message="required">Username is required</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="password" class="sr-only">password</label>
 					<input type="password" name="password" placeholder="Enter password" ng-model="credentials.password" class="form-control" id="password" required>
-					<div ng-messages="userForm.password.$error" role="alert">
+					<div ng-show="errorClass('password')" ng-messages="userForm.password.$error" role="alert">
 						<p class="help-block error-text" ng-message="required">Password is required</p>
 					</div>
 				</div>
 				<div class="height-30"></div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-next">Login</button>
+					<button type="submit" ng-disabled="userForm.$invalid" class="btn btn-next">Login</button>
 					<button type="reset" class="btn btn-previous">Reset</button>
 				</div>				
 				<alert type="danger" ng-show="error" class="text-center text-danger">

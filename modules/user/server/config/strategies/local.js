@@ -17,25 +17,30 @@ module.exports = function() {
   function(username, password, done) {
     db.User.findOne({
       where: {
-        username: username
+        username: username,
+        active: true
       }
     })
     .then(function(user) {
 
-      if (!user || !user.authenticate(user, password)) {
+      // Authenticate username and password
+      if (!user || !user.authenticateUser(user, username)) {
         done(null, false, {
-          message: 'Invalid username or password'
+          message: 'Incorrect Username / User Suspended'
         });
-
         return null;
-      }
+      } else if (!user || !user.authenticatePass(user, password)) {
+        done(null, false, {
+          message: 'Incorrect Password'
+        });
+        return null;
+      } 
 
       done(null, user);
 
       return null;
     })
     .catch(function(err) {
-      console.log("catch = ",err)
       done(err);
     });
   }));
