@@ -9,27 +9,28 @@
 module.exports = function(sequelize, DataTypes) {
 
   var User = sequelize.define('User', {
+    site_user_id: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     username: {
       allowNull: false,
       type: DataTypes.STRING,
       unique: true
     },
     password: {
-      allowNull: function() {
-        var isLocal = this.provider === 'local';
-        return isLocal;
-      },
+      allowNull: false,
       type: DataTypes.STRING
     },
-    site_user_id: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
     sfid: {
+      allowNull: false,
       type: DataTypes.STRING
     },
     active: {
+      allowNull: false,
+      defaultValue: true,
       type: DataTypes.BOOLEAN
     }
   }, {

@@ -3,7 +3,8 @@
 module.exports = {
   app: {
     title: 'G/O Onboarding',
-    description: 'G/O Digital - Onboarding Form'
+    description: 'G/O Digital - Onboarding Form',
+    company: 'G/O Digital'
   },
   port: process.env.PORT || 3000,
   host: process.env.HOST || '0.0.0.0',

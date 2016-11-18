@@ -3,12 +3,11 @@
 angular.module('user').controller('AuthenticationController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication',
   function ($scope, $state, $http, $location, $window, Authentication) {
 
+    console.log($scope);
+
     // Get an eventual error defined in the URL query string:
     $scope.error = $location.search().err;
     $scope.authentication = Authentication;
-
-    // TODO-GO
-    // Authentication in function parameter
 
     // If user is signed in then redirect back home
     if ($scope.authentication.user) {

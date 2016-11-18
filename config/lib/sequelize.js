@@ -1,20 +1,28 @@
 'use strict';
 
 var config = require('../config'),
-  env = process.env.NODE_ENV || 'development',
-  fs = require('fs'),
-  path = require('path'),
-  Sequelize = require('sequelize');
+env = process.env.NODE_ENV || 'development',
+fs = require('fs'),
+path = require('path'),
+Sequelize = require('sequelize');
 
 var db = {};
 
-// Sequelize
+Sequelize
 var sequelize = new Sequelize(config.db.options.database, config.db.options.username, config.db.options.password, {
   dialect: 'postgres',
   logging: config.db.options.logging, 
   host: config.db.options.host,
   port: config.db.options.port
 });
+
+// var sequelize = new Sequelize(config.db.options.dburl, {
+//   dialect: 'postgres',
+//   protocol: 'postgres',
+//   dialectOptions: {
+//     ssl: true
+//   }
+// });
 
 // Import models
 config.files.server.models.forEach(function(modelPath) {
