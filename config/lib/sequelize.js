@@ -25,11 +25,15 @@ var sequelize = new Sequelize(config.db.options.dburl, {
   }
 });
 
+console.log("Database URL : ",config.db.options.dburl);
+
 // Import models
 config.files.server.models.forEach(function(modelPath) {
   var model = sequelize.import(path.resolve(modelPath));9
   db[model.name] = model;
 });
+
+console.log("DB : ", db);
 
 // Associate models
 Object.keys(db).forEach(function(modelName) {
