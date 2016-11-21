@@ -75,11 +75,11 @@ button.btn.active:focus { outline: 0; opacity: 0.6; color: #fff; }
 
 button.btn.btn-next,
 button.btn.btn-next:focus,
-button.btn.btn-next:active:focus, button.btn.btn-next.active:focus { background: #f35b3f; }
+button.btn.btn-next:active:focus, button.btn.btn-next.active:focus { background: #008000; }
 
 button.btn.btn-submit,
 button.btn.btn-submit:focus,
-button.btn.btn-submit:active:focus, button.btn.btn-submit.active:focus { background: #f35b3f; }
+button.btn.btn-submit:active:focus, button.btn.btn-submit.active:focus { background: #008000; }
 
 button.btn.btn-previous,
 button.btn.btn-previous:focus,

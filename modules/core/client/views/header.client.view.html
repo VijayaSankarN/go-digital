@@ -1,0 +1,4 @@
+<div class="container" ng-controller="HeaderController" ng-show="authentication.user">
+	Logged in as <span ng-bind="authentication.user.username"></span> | 
+	<a ng-click="signout()">signout</a>
+</div>

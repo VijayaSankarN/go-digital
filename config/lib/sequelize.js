@@ -8,25 +8,26 @@ Sequelize = require('sequelize');
 
 var db = {};
 
-Sequelize
-var sequelize = new Sequelize(config.db.options.database, config.db.options.username, config.db.options.password, {
-  dialect: 'postgres',
-  logging: config.db.options.logging, 
-  host: config.db.options.host,
-  port: config.db.options.port
-});
+// Sequelize
 
-// var sequelize = new Sequelize(config.db.options.dburl, {
+// var sequelize = new Sequelize(config.db.options.database, config.db.options.username, config.db.options.password, {
 //   dialect: 'postgres',
-//   protocol: 'postgres',
-//   dialectOptions: {
-//     ssl: true
-//   }
+//   logging: config.db.options.logging, 
+//   host: config.db.options.host,
+//   port: config.db.options.port
 // });
+
+var sequelize = new Sequelize(config.db.options.dburl, {
+  dialect: 'postgres',
+  protocol: 'postgres',
+  dialectOptions: {
+    ssl: true
+  }
+});
 
 // Import models
 config.files.server.models.forEach(function(modelPath) {
-  var model = sequelize.import(path.resolve(modelPath));
+  var model = sequelize.import(path.resolve(modelPath));9
   db[model.name] = model;
 });
 

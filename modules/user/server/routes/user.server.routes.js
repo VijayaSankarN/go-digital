@@ -6,5 +6,5 @@ module.exports = function (app) {
 
   // Setting up the users profile api
   app.route('/api/user/verify').post(user.verify);
-  app.route('/api/user/signout').post(user.signout);
+  app.route('/api/user/signout').get(user.signout);
 };

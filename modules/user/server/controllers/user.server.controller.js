@@ -37,8 +37,6 @@ exports.verify = function(req, res, next) {
  * Signout
  */
 exports.signout = function(req, res) {
-  req.logout();
-
   req.session.destroy(function (err) {
     res.redirect('/');
   });
