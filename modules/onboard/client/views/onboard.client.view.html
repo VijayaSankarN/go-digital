@@ -13,16 +13,18 @@
 				<div class="f1-progress">
 					<div class="f1-progress-line width-100"></div>
 				</div>
-				<div class="f1-step active">
+				<div class="f1-step width-{{pageProgress}}" ng-class="{active: page.page_id==pageId}" ng-repeat="page in pageDetails">
 					<div class="f1-step-icon"><i class="fa fa-dashboard"></i></div>
-					<p>Step 1</p>
-				</div><div class="f1-step">
-					<div class="f1-step-icon"><i class="fa fa-dashboard"></i></div>
-					<p>Step 2</p>
+					<p>{{page.page_name}}</p>
 				</div>
 			</div>
 
-			UNDER CONSTRUCTION             	
+			<fieldset>
+				<div class="form-group" ng-repeat="field in fieldDetails">
+					<label class="sr-only">{{field.field_label}}</label>
+					<input type="{{field.field_type}}" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}">
+				</div>
+			</fieldset>
 		</form>
 	</div>
 </div>

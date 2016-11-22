@@ -16,6 +16,14 @@ angular.module('onboard').config(['$stateProvider', '$urlRouterProvider',
     .state('onboard', {
       url: '/onboard',
       templateUrl: 'modules/onboard/client/views/onboard.client.view.html'
+    })
+    .state('onboardform', {
+      url: '/onboard/:formId',
+      templateUrl: 'modules/onboard/client/views/onboard.client.view.html',
+    })
+    .state('onboardformpage', {
+      url: '/onboard/:formId/:pageId',
+      templateUrl: 'modules/onboard/client/views/onboard.client.view.html'
     });
   }
 ]);
