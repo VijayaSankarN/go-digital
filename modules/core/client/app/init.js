@@ -10,52 +10,28 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 
     $httpProvider.interceptors.push('authInterceptor');
   }
-]);
+  ]);
 
-angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, Authentication) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, Authentication) {
 
   // Check authentication before changing state
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-    // if (toState.data && toState.data.roles && toState.data.roles.length > 0) {
-      var allowed = false;
-      // toState.data.roles.forEach(function (role) {
-      //   if ((role === 'guest') || (Authentication.user && Authentication.user.roles !== undefined && Authentication.user.roles.indexOf(role) !== -1)) {
-      //     allowed = true;
-      //     return true;
-      //   }
-      // });
-      
-      
-  // console.log(toState)      
-  // console.log("aaa",Authentication)      
 
-  
-
-
-  // if (Authentication.user !== undefined && typeof Authentication.user === 'object') {
-  //   $state.go('dashboard');
-  // } else {
-  //   if(toState.name === 'login') {
-  //     return;
-  //   }
-  //   $state.go('login');
-  // }
-
-
-
-
-      // if (!allowed) {
-      //   event.preventDefault();
-      //   if (Authentication.user !== undefined && typeof Authentication.user === 'object') {
-      //     $state.go('dashboard');
-      //   } else {
-      //     $state.go('login').then(function () {
-      //       storePreviousState(toState, toParams);
-      //     });
-      //   }
-      // }
-    // }
-  });
+      // Check if the user is logged in
+      $http.get('/api/user/verify').success(function(response){
+        Authentication = response;
+      }).then(function(){
+        if (Authentication.state === "success") {
+          if(toState.name === 'login' || toState.name === 'user') {
+            $state.go('dashboard');
+          } 
+        } else {
+          if(toState.name === 'login' || toState.name === 'user') {
+            $state.go('login');
+          } 
+        }
+      });
+    });
 
   // Record previous state
   $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {

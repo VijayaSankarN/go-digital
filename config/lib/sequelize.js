@@ -10,22 +10,22 @@ var db = {};
 
 // Sequelize
 
-// var sequelize = new Sequelize(config.db.options.database, config.db.options.username, config.db.options.password, {
-//   dialect: 'postgres',
-//   logging: config.db.options.logging, 
-//   host: config.db.options.host,
-//   port: config.db.options.port
-// });
-
-var sequelize = new Sequelize(config.db.options.dburl, {
+var sequelize = new Sequelize(config.db.options.database, config.db.options.username, config.db.options.password, {
   dialect: 'postgres',
-  protocol: 'postgres',
-  dialectOptions: {
-    ssl: true
-  }
+  logging: config.db.options.logging, 
+  host: config.db.options.host,
+  port: config.db.options.port
 });
 
-console.log("Database URL : ",config.db.options.dburl);
+// var sequelize = new Sequelize(config.db.options.dburl, {
+//   dialect: 'postgres',
+//   protocol: 'postgres',
+//   dialectOptions: {
+//     ssl: true
+//   }
+// });
+
+// console.log("Database URL : ",config.db.options.dburl);
 
 // Import models
 config.files.server.models.forEach(function(modelPath) {
@@ -33,7 +33,7 @@ config.files.server.models.forEach(function(modelPath) {
   db[model.name] = model;
 });
 
-console.log("DB : ", db);
+// console.log("DB : ", db);
 
 // Associate models
 Object.keys(db).forEach(function(modelName) {

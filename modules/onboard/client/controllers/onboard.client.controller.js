@@ -5,11 +5,11 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
 
   	$scope.authentication = Authentication;
 
-    // If user is not signed in then redirect to login
-    if (!$scope.authentication.user) {
-      Authentication.user = $scope.authentication.user = null;
-      $location.path('/login');
-    }
+    // // If user is not signed in then redirect to login
+    // if (!$scope.authentication.user) {
+    //   Authentication.user = $scope.authentication.user = null;
+    //   $location.path('/login');
+    // }
 
   }
 ]);

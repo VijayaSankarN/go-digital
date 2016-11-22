@@ -5,6 +5,7 @@ module.exports = function (app) {
   var user = require('../controllers/user.server.controller');
 
   // Setting up the users profile api
-  app.route('/api/user/verify').post(user.verify);
+  app.route('/api/user/verify').get(user.verify);
+  app.route('/api/user/signin').post(user.signin);
   app.route('/api/user/signout').get(user.signout);
 };

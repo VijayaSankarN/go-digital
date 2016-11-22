@@ -3,15 +3,15 @@
 /**
  * Module dependencies.
  */
-var path = require('path'),
-  db = require(path.resolve('./config/lib/sequelize')),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
-  passport = require('passport');
+ var path = require('path'),
+ db = require(path.resolve('./config/lib/sequelize')),
+ errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+ passport = require('passport');
 
 /**
  * Signin after passport authentication
  */
-exports.verify = function(req, res, next) {
+ exports.signin = function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
 
     if (err || !user) {
@@ -26,7 +26,7 @@ exports.verify = function(req, res, next) {
             username:user.dataValues.username,
             sfid:user.dataValues.sfid
           };
-          return res.json(userDetails);
+          return res.json(user);
         }
       });
     }
@@ -34,9 +34,21 @@ exports.verify = function(req, res, next) {
 };
 
 /**
+ * Verify users
+ */
+ exports.verify = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.send({state: 'success', user: req.user});
+  } else {
+    res.send({state: 'failure', user: null});
+  }
+};
+
+
+/**
  * Signout
  */
-exports.signout = function(req, res) {
+ exports.signout = function(req, res) {
   req.session.destroy(function (err) {
     res.redirect('/');
   });

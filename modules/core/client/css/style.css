@@ -11,7 +11,7 @@ body {
 strong { font-weight: 500; }
 
 a, a:hover, a:focus {
-	color: #008000;
+	color: #2292d0;
 	text-decoration: none;
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
 }
@@ -40,8 +40,8 @@ h4 {
 
 img { max-width: 100%; }
 
-::-moz-selection { background: #008000; color: #fff; text-shadow: none; }
-::selection { background: #008000; color: #fff; text-shadow: none; }
+::-moz-selection { background: #2292d0; color: #fff; text-shadow: none; }
+::selection { background: #2292d0; color: #fff; text-shadow: none; }
 
 
 /***** Top content *****/
@@ -62,12 +62,23 @@ img { max-width: 100%; }
 	padding: 25px; background: #fff;
 	-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
 }
+
+.userlog {
+	padding: 2px; background: #fff;
+	-moz-border-bottom-right-radius: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px;
+	-moz-border-bottom-left-radius: 4px; -webkit-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
 .f1 h3 { margin-top: 0; margin-bottom: 5px; text-transform: uppercase; }
 
 .f1-steps { overflow: hidden; position: relative; margin-top: 20px; }
 
 .f1-progress { position: absolute; top: 24px; left: 0; width: 100%; height: 1px; background: #ddd; }
-.f1-progress-line { position: absolute; top: 0; left: 0; height: 1px; background: #008000; }
+.f1-progress-line { position: absolute; top: 0; left: 0; height: 1px; background: #2292d0; }
 
 .f1-step { position: relative; float: left; width: 20%; padding: 0 5px; }
 
@@ -77,27 +88,27 @@ img { max-width: 100%; }
 	-moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;
 }
 .f1-step.activated .f1-step-icon {
-	background: #fff; border: 1px solid #008000; color: #008000; line-height: 38px;
+	background: #fff; border: 1px solid #2292d0; color: #2292d0; line-height: 38px;
 }
 .f1-step.active .f1-step-icon {
-	width: 48px; height: 48px; margin-top: 0; background: #008000; font-size: 22px; line-height: 48px;
+	width: 48px; height: 48px; margin-top: 0; background: #2292d0; font-size: 22px; line-height: 48px;
 }
 
 .f1-step p { color: #ccc; }
-.f1-step.activated p { color: #008000; }
-.f1-step.active p { color: #008000; }
+.f1-step.activated p { color: #2292d0; }
+.f1-step.active p { color: #2292d0; }
 
-h4.title-header { color: #008000; border-bottom: 1px dashed; text-align: left;}
+h4.title-header { color: #2292d0; border-bottom: 1px dashed; text-align: left;}
 
 table th {
 	font-weight: 500;
 }
 
-/*.f1 fieldset { display: none; text-align: left; }*/
+.logo { width: 200px; }
 
 .f1-buttons { text-align: right; }
 
-.f1 .input-error { border-color: #008000; }
+.f1 .input-error { border-color: #2292d0; }
 
 .width-10{
 	width: 10%;
@@ -180,8 +191,8 @@ table th {
 }
 
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-	background-color: #008000;
-    border-color: #008000;
+	background-color: #2292d0;
+    border-color: #2292d0;
 }
 
 
