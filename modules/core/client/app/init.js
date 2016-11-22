@@ -26,9 +26,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
             $state.go('dashboard');
           } 
         } else {
-          if(toState.name === 'login' || toState.name === 'user') {
-            $state.go('login');
-          } 
+          $state.go('login');
         }
       });
     });
