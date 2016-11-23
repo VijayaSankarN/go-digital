@@ -9,6 +9,7 @@ module.exports = function(app) {
 
   app.route('/api/getPages').get(onboard.getPages);
   app.route('/api/getFields').get(onboard.getFields);
+  app.route('/api/getSelectOptions').get(onboard.getSelectOptions);
   
     // .post(onboard.create);
 

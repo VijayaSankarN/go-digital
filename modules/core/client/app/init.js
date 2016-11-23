@@ -20,6 +20,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
       // Check if the user is logged in
       $http.get('/api/user/verify').success(function(response){
         Authentication = response;
+        $rootScope.userDetails = response.user;
       }).then(function(){
         if (Authentication.state === "success") {
           if(toState.name === 'login' || toState.name === 'user') {

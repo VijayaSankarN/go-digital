@@ -1,6 +1,10 @@
 
 input[type="text"], 
 input[type="password"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"],  
+select,
 textarea, 
 textarea.form-control {
 	height: 44px;
@@ -29,6 +33,10 @@ textarea.form-control {
 
 input[type="text"]:focus, 
 input[type="password"]:focus, 
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+input[type="url"]:focus,  
+select:focus,
 textarea:focus, 
 textarea.form-control:focus {
 	outline: 0;
@@ -38,18 +46,30 @@ textarea.form-control:focus {
 }
 
 input[type="text"]:-moz-placeholder, input[type="password"]:-moz-placeholder, 
+input[type="number"]:-moz-placeholder, 
+input[type="email"]:-moz-placeholder, 
+input[type="url"]:-moz-placeholder,  
+select:-moz-placeholder,
 textarea:-moz-placeholder, textarea.form-control:-moz-placeholder { color: #888; }
 
 input[type="text"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, 
+input[type="number"]:-ms-input-placeholder, 
+input[type="email"]:-ms-input-placeholder, 
+input[type="url"]:-ms-input-placeholder,  
+select:-ms-input-placeholder,
 textarea:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder { color: #888; }
 
 input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, 
+input[type="number"]::-webkit-input-placeholder, 
+input[type="email"]::-webkit-input-placeholder, 
+input[type="url"]::-webkit-input-placeholder,  
+select::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { color: #888; }
 
 label { font-weight: 300; }
 
 
-button.btn {
+.btn {
 	min-width: 105px;
 	height: 40px;
     margin: 0;
@@ -67,29 +87,89 @@ button.btn {
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
 }
 
-button.btn:hover { opacity: 0.6; color: #fff; }
-button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
-button.btn:focus,
-button.btn:active:focus,
-button.btn.active:focus { outline: 0; opacity: 0.6; color: #fff; }
+.btn:hover { opacity: 0.6; color: #fff; }
+.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus { outline: 0; opacity: 0.6; color: #fff; }
 
-button.btn.btn-next,
-button.btn.btn-next:focus,
-button.btn.btn-next:active:focus, button.btn.btn-next.active:focus { background: #2292d0; }
+.btn.btn-next,
+.btn.btn-next:focus,
+.btn.btn-next:active:focus, .btn.btn-next.active:focus { background: #2292d0; }
 
-button.btn.btn-submit,
-button.btn.btn-submit:focus,
-button.btn.btn-submit:active:focus, button.btn.btn-submit.active:focus { background: #2292d0; }
+.btn.btn-submit,
+.btn.btn-submit:focus,
+.btn.btn-submit:active:focus, .btn.btn-submit.active:focus { background: #2292d0; }
 
-button.btn.btn-previous,
-button.btn.btn-previous:focus,
-button.btn.btn-previous:active:focus, button.btn.btn-previous.active:focus { background: #bbb; }
+.btn.btn-previous,
+.btn.btn-previous:focus,
+.btn.btn-previous:active:focus, .btn.btn-previous.active:focus { background: #bbb; }
 
-button.btn-xs {
+.btn-xs {
     padding: 3px 10px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px;
     min-width: 0px;
     height: 25px;
+}
+
+
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
 }
