@@ -7,16 +7,9 @@ var onboard = require('../controllers/onboard.server.controller');
 
 module.exports = function(app) {
 
-  app.route('/api/getPages').get(onboard.getPages);
-  app.route('/api/getFields').get(onboard.getFields);
-  app.route('/api/getSelectOptions').get(onboard.getSelectOptions);
+  app.route('/api/onboard/getPages').get(onboard.getPages);
+  app.route('/api/onboard/getFields').get(onboard.getFields);
+  app.route('/api/onboard/getSelectOptions').get(onboard.getSelectOptions);
+  app.route('/api/onboard/getFormData').get(onboard.getFormData);
   
-    // .post(onboard.create);
-
-  // Single form routes
-  // app.route('/api/onboard/:formId/:pageId')
-  //   .get(onboard.readFields)
-  //   .get(onboard.read)
-  //   .put(onboard.update)
-  //   .delete(onboard.delete);
 };

@@ -75,78 +75,25 @@ exports.getSelectOptions = function(req, res) {
   });
 };
 
-// /**
-//  * List fields required for the onboard form
-//  */
-// exports.create = function(req, res) {
-//   db.Article.findAll({
-//     include: [
-//       db.User
-//     ]
-//   })
-//   .then(function(articles) {
-//     return res.json(articles);
-//   })
-//   .catch(function(err) {
-//     return res.status(400).send({
-//       message: errorHandler.getErrorMessage(err)
-//     });
-//   });  
-// };
+/**
+ * Get all data filled by the user so far for the give form
+ */
+exports.getFormData = function(req, res) {
+  
+  var formId = req.query.formId;
 
-// /**
-//  * List fields required for the onboard form
-//  */
-// exports.read = function(req, res) {
-//   db.Article.findAll({
-//     include: [
-//       db.User
-//     ]
-//   })
-//   .then(function(articles) {
-//     return res.json(articles);
-//   })
-//   .catch(function(err) {
-//     return res.status(400).send({
-//       message: errorHandler.getErrorMessage(err)
-//     });
-//   });
-// };
-
-// /**
-//  * List fields required for the onboard form
-//  */
-// exports.update = function(req, res) {
-//   db.Article.findAll({
-//     include: [
-//       db.User
-//     ]
-//   })
-//   .then(function(articles) {
-//     return res.json(articles);
-//   })
-//   .catch(function(err) {
-//     return res.status(400).send({
-//       message: errorHandler.getErrorMessage(err)
-//     });
-//   });
-// };
-
-// /**
-//  * List fields required for the onboard form
-//  */
-// exports.delete = function(req, res) {
-//   db.Article.findAll({
-//     include: [
-//       db.User
-//     ]
-//   })
-//   .then(function(articles) {
-//     return res.json(articles);
-//   })
-//   .catch(function(err) {
-//     return res.status(400).send({
-//       message: errorHandler.getErrorMessage(err)
-//     });
-//   });
-// };
+  db.onboard_form_submission.findOne({
+    where: {
+      onboard_form_submission_id: formId,
+      active: true
+    }
+  })
+  .then(function(forms) {
+    return res.json(forms);
+  })
+  .catch(function(err) {
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+  });
+};

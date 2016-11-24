@@ -1,13 +1,42 @@
 'use strict';
 
-angular.module('onboard.services').factory('onboardService', ['$resource',
-  function ($resource) {
-    return $resource('api/onboard/:formId', {
-      formId: '@id'
-    }, {
-      update: {
-        method: 'PUT'
-      }
-    });
+angular.module('onboard').factory('onboardServices', function($http) {
+  var getPages = '/api/onboard/getPages',
+      getFields = '/api/onboard/getFields',
+      getSelectOptions = '/api/onboard/getSelectOptions',
+      getFormData = 'api/onboard/getFormData',
+      dataFactory = {};
+
+  dataFactory.getPages = function() {
+    return $http.get(getPages);
   }
-]);
+
+  dataFactory.getFields = function(pageId) {
+    var pageIdParam = {
+      params: {
+        pageId: pageId
+      }
+    }
+    return $http.get(getFields, pageIdParam);
+  }
+  
+  dataFactory.getSelectOptions = function(fieldId) {
+    var fieldIdParam = {
+      params: {
+        fieldId: fieldId
+      }
+    }
+    return $http.get(getSelectOptions, fieldIdParam);
+  }
+
+  dataFactory.getFormData = function(formId) {
+    var formIdParam = {
+      params: {
+        formId: formId
+      }
+    }
+    return $http.get(getFormData, formIdParam);
+  }
+
+  return dataFactory;
+});

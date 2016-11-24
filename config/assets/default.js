@@ -6,7 +6,8 @@ module.exports = {
       css: [
       'public/lib/bootstrap/dist/css/bootstrap.min.css',
       'public/lib/font-awesome/css/font-awesome.min.css',
-      'public/lib/datatables.net-bs/css/dataTables.bootstrap.css'
+      'public/lib/angular-datatables/dist/css/angular-datatables.min.css',
+      'public/lib/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css'
       ],
       js: [
       'public/lib/jquery/dist/jquery.min.js',
@@ -19,7 +20,8 @@ module.exports = {
       'public/lib/angular-ui-router/release/angular-ui-router.js',
       'public/lib/angular-sanitize/angular-sanitize.js',
       'public/lib/datatables.net/js/jquery.dataTables.js',
-      'public/lib/datatables.net-bs/js/dataTables.bootstrap.js'
+      'public/lib/angular-datatables/dist/angular-datatables.min.js',
+      'public/lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js'
       ]
     },
     css: [

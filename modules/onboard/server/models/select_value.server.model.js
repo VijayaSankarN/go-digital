@@ -8,6 +8,7 @@
   var Select_value = sequelize.define('select_value', {
     select_value_id: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true
     },
     field_mapping_id: {

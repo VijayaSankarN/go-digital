@@ -1,6 +1,6 @@
 <div class="row" ng-controller="dashboardController">
 	<div class="col-sm-12 form-box">
-		<form role="form" name="" ng-submit="" method="post" class="f1" autocomplete="off">
+		<form role="form" name="" ng-submit="" method="post" class="f1" autocomplete="off" ng-init="getForms()">
 
 			<div class="row">
 				<div class="col-xs-6 col-xs-offset-3">
@@ -20,10 +20,14 @@
 			</div>
 
 			<fieldset class="text-left">
+				<div class="text-center">
+					<a ng-click="isDisabled || startNew()" ng-disabled="isDisabled" class="btn btn-next">Start new form</a>
+				</div>
 				<div>
-					<h4 class="title-header">Pending Forms</h4>
-					<div class="height-30"></div>
-					<table class="table table-responsive table-bordered table-condensed table-striped">
+					<h4 class="title-header">
+						Pending Forms
+					</h4>
+					<table datatable="ng" class="table table-responsive table-bordered table-condensed table-striped">
 						<thead>
 							<tr>
 								<th>Form Name</th>
@@ -36,14 +40,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Form 2</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td><a href="/onboard" class="btn btn-next btn-xs">Resume</a></td>
+							<tr ng-repeat="pendingForm in pendingList">
+								<td>{{$index+1}}</td>
+								<td>{{pendingForm.advertiser_company_name__c || '-'}}</td>
+								<td>{{pendingForm.advertiser_contact_first_name__c || '-'}}</td>
+								<td>{{pendingForm.advertiser_contact_last_name__c || '-'}}</td>
+								<td>{{pendingForm.createdAt | date:'MM/dd/y hh:mm:ss a'}}</td>
+								<td>{{pendingForm.updatedAt | date:'MM/dd/y hh:mm:ss a'}}</td>								
+								<td><a href="/onboard/{{pendingForm.onboard_form_submission_id}}/{{(pendingForm.last_page_completed)+1}}" class="btn btn-next btn-xs">Resume</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -51,8 +55,7 @@
 				<div class="height-60"></div>
 				<div>
 					<h4 class="title-header">Submitted Forms</h4>
-					<div class="height-30"></div>
-					<table class="table table-responsive table-bordered table-condensed table-striped">
+					<table datatable="ng" class="table table-responsive table-bordered table-condensed table-striped">
 						<thead>
 							<tr>
 								<th>Form Name</th>
@@ -61,18 +64,16 @@
 								<th>Advertiser Lastname</th>
 								<th>Created Date</th>
 								<th>Last Modified Date</th>
-								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Form 1</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td>11/16/2016</td>
-								<td><a href="/onboard" class="btn btn-next btn-xs">View</a></td>
+							<tr ng-repeat="submittedForm in submittedList">
+								<td>{{$index+1}}</td>
+								<td>{{submittedForm.advertiser_company_name__c}}</td>
+								<td>{{submittedForm.advertiser_contact_first_name__c}}</td>
+								<td>{{submittedForm.advertiser_contact_last_name__c}}</td>
+								<td>{{submittedForm.createdAt | date:'MM/dd/y hh:mm:ss a'}}</td>
+								<td>{{submittedForm.updatedAt | date:'MM/dd/y hh:mm:ss a'}}</td>								
 							</tr>
 						</tbody>
 					</table>

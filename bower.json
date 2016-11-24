@@ -11,8 +11,7 @@
     "angular-messages": "^1.5.8",
     "angular-ui-router": "^0.3.2",
     "angular-sanitize": "^1.5.8",
-    "datatables.net-bs": "^1.10.12",
-    "datatables.net": "^1.10.12"
+    "angular-datatables": "^0.5.5"
   },
   "authors": [
     "Vijaya Sankar N"

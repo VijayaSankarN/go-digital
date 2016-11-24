@@ -8,6 +8,7 @@
   var Field_mapping = sequelize.define('field_mapping', {
     field_mapping_id: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true
     },
     field_name: {

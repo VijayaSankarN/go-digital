@@ -1,23 +1,22 @@
 'use strict';
 
-angular.module('onboard').controller('onboardController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication',
-  function ($scope, $state, $http, $location, $window, Authentication) {
+angular.module('onboard').controller('onboardController', ['$scope', '$state', 'onboardServices',
+  function ($scope, $state, onboardServices) {
 
-    $scope.authentication = Authentication;
-
-    $scope.formId = $state.params.formId || 'NEW';
+    $scope.formId = $state.params.formId;
     $scope.pageId = $state.params.pageId;
     $scope.pageDetails = {};
     $scope.fieldDetails = {};
     $scope.selectOptions = {};
+    $scope.formData = {};
     $scope.progressBar = 0;
     $scope.dispPrevious = 0;
 
     // Get pages
     $scope.getPages = function() {
-      $http.get('/api/getPages').success(function(response) {
+      onboardServices.getPages().then(function(response) {
 
-        $scope.pageDetails = response;
+        $scope.pageDetails = response.data;
         $scope.pageIconWidth = Math.floor((100/$scope.pageDetails.length) / 10) * 10;
 
         $scope.pageCollection = $scope.pageDetails.map(function(val,index) {
@@ -25,7 +24,6 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
         });
 
         $scope.pageId = $state.params.pageId || $scope.pageCollection[0];
-
         $scope.getFields($scope.pageId);
         $scope.progressBar = ($scope.getPosition($scope.pageId) * $scope.pageIconWidth) + $scope.pageIconWidth/2;
         $scope.dispPrev = $scope.getPosition($scope.pageId);
@@ -40,24 +38,19 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
           $scope.nextLink = '/onboard/' + $scope.formId + '/' + $scope.pageCollection[$scope.getPosition($scope.pageId)+1];
         }
 
-      }).error(function (response) {
-        $scope.error = response.message;
+      }, function (error) {
+        $scope.error = error.message;
       });
     };
 
     // Get fields inside the page
     $scope.getFields = function(pageId) {
-      var pageIdParam = {
-        params: {
-          pageId: pageId
-        }
-      }
-      $http.get('/api/getFields', pageIdParam).success(function (response) {
+      onboardServices.getFields(pageId).then(function (response) {
 
-        $scope.fieldDetails = response;
+        $scope.fieldDetails = response.data;
 
         // Get field id for select elements
-        var selectFieldsList = response.filter(function(val, index){
+        var selectFieldsList = $scope.fieldDetails.filter(function(val, index){
           if(val.field_type.toLowerCase() == "select")
             return val;
         });
@@ -66,22 +59,20 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
           selectFieldsList.forEach(function(val, index){
             $scope.getSelectOptions(val.field_mapping_id);
           });
+        } else {
+          $scope.getFormData($scope.formId);
         }
 
-      }).error(function (response) {
-        $scope.error = response.message;
+      }, function (error) {
+        $scope.error = error.message;
       });
     };
 
     // Get options for select element
-    $scope.getSelectOptions = function(fieldId) {
-      var fieldIdParam = {
-        params: {
-          fieldId: fieldId
-        }
-      }
-      $http.get('/api/getSelectOptions', fieldIdParam).success(function (response) {
-        var selectOptionsArr = response;
+    $scope.getSelectOptions = function(fieldId) {      
+      onboardServices.getSelectOptions(fieldId).then(function (response) {
+        
+        var selectOptionsArr = response.data;
 
         selectOptionsArr.forEach(function(val, index) {
           if($scope.selectOptions[val.field_mapping_id] == undefined) {
@@ -90,11 +81,23 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
           $scope.selectOptions[val.field_mapping_id].push(val.select_value);
         });
 
-      }).error(function (response) {
-        $scope.error = response.message;
+        $scope.getFormData($scope.formId);
+
+      }, function (error) {
+        $scope.error = error.message;
       });
     };
 
+    // Get data filled by user
+    $scope.getFormData = function(formId) {
+      onboardServices.getFormData(formId).then(function (response) {
+        
+        $scope.formData = response.data;
+
+      }, function (error) {
+        $scope.error = error.message;
+      });
+    }
 
     // Get the current position of the page
     $scope.getPosition = function(value) {
@@ -110,11 +113,5 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
       angular.element(document.querySelector('#pageicon-' + iconId)).removeClass('fa-ellipsis-h');
       angular.element(document.querySelector('#pageicon-' + iconId)).addClass('fa-check');
     }
-
-    $scope.errorClass = function (control, method) {
-        if ($scope.onboardForm[control].$invalid && !$scope.onboardForm[control].$pristine) {
-            return (method == "class" ? 'has-error' : true);
-        }
-    };
   }
 ]);

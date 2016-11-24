@@ -23,18 +23,21 @@
 			<fieldset>
 				<div class="form-group" ng-repeat="field in fieldDetails" ng-switch on="(field.field_type | lowercase)">
 					<label class="sr-only">{{field.field_label}}</label>
-					<input type="text" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="text" required>
-					<input type="number" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="number" required>
-					<input type="date" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="date" required>
-					<input type="email" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="email" required>
-					<input type="url" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="url" required>
-					<input type="password" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="password" required>
+					<input type="text" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="text" required>
+					<input type="number" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="number" required>
+					<input type="date" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="date" required>
+					<input type="email" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="email" required>
+					<input type="url" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="url" required>
+					<input type="password" name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="password" required>
 					<span ng-switch-when="checkbox">
-						<input type="checkbox" name="{{field.field_name}}" placeholder="{{field.field_label}}" id="{{field.field_name}}"> {{field.field_label}}
+						<input type="checkbox" name="{{field.field_name}}" placeholder="{{field.field_label}}" id="{{field.field_name}}" ng-checked="formData[(field.field_name | lowercase)]"> {{field.field_label}}
 					</span>
-					<textarea name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="textarea" required></textarea>
+					<textarea name="{{field.field_name}}" placeholder="{{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="textarea" required>{{formData[(field.field_name | lowercase)]}}</textarea>
+					<div ng-switch-when="select">
+					<label class="text-left">{{field.field_label}}</label>
+					</div>
 					<select name="{{field.field_name}}" class="form-control" id="{{field.field_name}}" ng-switch-when="select" required>
-						<option ng-repeat="selectOption in selectOptions[field.field_mapping_id]">{{selectOption}}</option>
+						<option ng-repeat="selectOption in selectOptions[field.field_mapping_id]" ng-selected="formData[(field.field_name | lowercase)]===selectOption">{{selectOption}}</option>
 					</select>
 				</div>
 				<div class="f1-buttons">
