@@ -10,22 +10,22 @@ var db = {};
 
 // Sequelize
 
-var sequelize = new Sequelize(config.db.options.database, config.db.options.username, config.db.options.password, {
-  dialect: 'postgres',
-  logging: config.db.options.logging, 
-  host: config.db.options.host,
-  port: config.db.options.port,
-  timezone: 'Asia/Kolkata'
-});
-
-// var sequelize = new Sequelize(config.db.options.dburl, {
+// var sequelize = new Sequelize(config.db.options.database, config.db.options.username, config.db.options.password, {
 //   dialect: 'postgres',
-//   protocol: 'postgres',
-//   timezone: 'America/Phoenix',
-//   dialectOptions: {
-//     ssl: true
-//   }
+//   logging: config.db.options.logging, 
+//   host: config.db.options.host,
+//   port: config.db.options.port,
+//   timezone: 'Asia/Kolkata'
 // });
+
+var sequelize = new Sequelize(config.db.options.dburl, {
+  dialect: 'postgres',
+  protocol: 'postgres',
+  timezone: 'America/Phoenix',
+  dialectOptions: {
+    ssl: true
+  }
+});
 
 // console.log("Database URL : ",config.db.options.dburl);
 
