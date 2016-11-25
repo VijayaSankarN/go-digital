@@ -11,5 +11,6 @@ module.exports = function(app) {
   app.route('/api/onboard/getFields').get(onboard.getFields);
   app.route('/api/onboard/getSelectOptions').get(onboard.getSelectOptions);
   app.route('/api/onboard/getFormData').get(onboard.getFormData);
+  app.route('/api/onboard/updateFormData').post(onboard.updateFormData);
   
 };

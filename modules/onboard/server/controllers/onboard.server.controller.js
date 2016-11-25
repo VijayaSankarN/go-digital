@@ -3,15 +3,15 @@
 /**
  * Module dependencies
  */
-var path = require('path'),
-  db = require(path.resolve('./config/lib/sequelize')),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+ var path = require('path'),
+ db = require(path.resolve('./config/lib/sequelize')),
+ errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
  * Get pages
  */
-exports.getPages = function(req, res) {
-  
+ exports.getPages = function(req, res) {
+
   db.page.findAll({
     where: {
       active: true
@@ -31,7 +31,7 @@ exports.getPages = function(req, res) {
 /**
  * List fields required for the onboard form
  */
-exports.getFields = function(req, res) {
+ exports.getFields = function(req, res) {
 
   var pageId = req.query.pageId;
 
@@ -55,7 +55,7 @@ exports.getFields = function(req, res) {
 /**
  * List options for the select field
  */
-exports.getSelectOptions = function(req, res) {
+ exports.getSelectOptions = function(req, res) {
 
   var fieldId = req.query.fieldId;
 
@@ -78,8 +78,8 @@ exports.getSelectOptions = function(req, res) {
 /**
  * Get all data filled by the user so far for the give form
  */
-exports.getFormData = function(req, res) {
-  
+ exports.getFormData = function(req, res) {
+
   var formId = req.query.formId;
 
   db.onboard_form_submission.findOne({
@@ -88,10 +88,34 @@ exports.getFormData = function(req, res) {
       active: true
     }
   })
-  .then(function(forms) {
-    return res.json(forms);
+  .then(function(formData) {
+    delete formData.dataValues.active;
+    delete formData.dataValues.createdAt;
+    delete formData.dataValues.updatedAt;
+    return res.json(formData);
   })
   .catch(function(err) {
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+  });
+};
+
+/**
+ * Update data filled by the user so far for the give form
+ */
+ exports.updateFormData = function(req, res) {
+
+  var formData = req.body.formData;
+
+  db.onboard_form_submission.update(formData,
+  {
+    where: {
+      onboard_form_submission_id: formData.onboard_form_submission_id 
+    }
+  }).then(function(updateStatus){
+    return res.json(updateStatus);                              
+  }).catch(function(err) {
     return res.status(400).send({
       message: errorHandler.getErrorMessage(err)
     });

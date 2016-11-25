@@ -9,6 +9,7 @@ angular.module('dashboard').controller('dashboardController', ['$rootScope', '$s
     $scope.submittedList = [];
     $scope.dtOptions = '';
     $scope.isDisabled = false;
+    $rootScope.allowedFormIds = [];
 
     // Get forms list
     $scope.getForms = function() {
@@ -21,8 +22,10 @@ angular.module('dashboard').controller('dashboardController', ['$rootScope', '$s
             $scope.submittedList.push(val);
           } else {
             $scope.pendingList.push(val);
+            $rootScope.allowedFormIds.push(val.onboard_form_submission_id);
           }
         });
+
 
         // Load Datatable
         // $("table").DataTable({

@@ -43,7 +43,6 @@ exports.createForm = function(req, res) {
     return res.json(newForm);
   })
   .catch(function(err) {
-    console.log(err);
     return res.status(400).send({
       message: errorHandler.getErrorMessage(err)
     });

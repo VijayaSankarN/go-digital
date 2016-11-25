@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('onboard').controller('onboardController', ['$scope', '$state', 'onboardServices',
-  function ($scope, $state, onboardServices) {
+angular.module('onboard').controller('onboardController', ['$rootScope', '$scope', '$state', '$location', 'onboardServices',
+  function ($rootScope, $scope, $state, $location, onboardServices) {
 
     $scope.formId = $state.params.formId;
     $scope.pageId = $state.params.pageId;
@@ -11,13 +11,19 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
     $scope.formData = {};
     $scope.progressBar = 0;
     $scope.dispPrevious = 0;
+    $scope.isDisabledNext = true;
+
+    // Check if the form is valid for the user, otherwise redirect to dashboard
+    if($rootScope.allowedFormIds == undefined || $rootScope.allowedFormIds.indexOf($scope.formId*1) < 0) {
+      // $location.path("/dashboard");
+    }
 
     // Get pages
     $scope.getPages = function() {
       onboardServices.getPages().then(function(response) {
 
         $scope.pageDetails = response.data;
-        $scope.pageIconWidth = Math.floor((100/$scope.pageDetails.length) / 10) * 10;
+        $scope.pageIconWidth = 100/$scope.pageDetails.length;
 
         $scope.pageCollection = $scope.pageDetails.map(function(val,index) {
           return val.page_id;
@@ -71,7 +77,7 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
     // Get options for select element
     $scope.getSelectOptions = function(fieldId) {      
       onboardServices.getSelectOptions(fieldId).then(function (response) {
-        
+
         var selectOptionsArr = response.data;
 
         selectOptionsArr.forEach(function(val, index) {
@@ -91,12 +97,44 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
     // Get data filled by user
     $scope.getFormData = function(formId) {
       onboardServices.getFormData(formId).then(function (response) {
-        
+
         $scope.formData = response.data;
+        var last_page_completed = response.data.last_page_completed || $scope.pageCollection[0];
+
+        if($scope.pageId != last_page_completed) {
+          // $location.path('/onboard/'+formId+'/'+last_page_completed);
+        }
 
       }, function (error) {
         $scope.error = error.message;
       });
+    }
+
+    $scope.pageSubmit = function(isValid) {
+      $scope.isDisabledNext = true;
+      $scope.formData.last_page_completed = $scope.pageId;
+      var isLastPage = false;
+      if($scope.getPosition($scope.pageId) == ($scope.pageCollection.length-1)) {
+        $scope.formData.form_status = true;
+        isLastPage = true;
+      }
+      if(isValid) {
+        onboardServices.updateFormData($scope.formData).then(function (response) {
+          if(response.data) {
+            if(isLastPage) {
+              alert("Thanks for submission!");
+              $location.path("/dashboard");
+            } else {
+              $location.path($scope.nextLink);              
+            }
+          }
+        }, function (error) {
+          $scope.error = error.message;
+        });
+      } else {
+        alert("Please fix some errors in the form!");
+        $scope.isDisabledNext = true;
+      }
     }
 
     // Get the current position of the page
@@ -112,6 +150,16 @@ angular.module('onboard').controller('onboardController', ['$scope', '$state', '
       angular.element(document.querySelector('#page-' + iconId)).addClass('activated');
       angular.element(document.querySelector('#pageicon-' + iconId)).removeClass('fa-ellipsis-h');
       angular.element(document.querySelector('#pageicon-' + iconId)).addClass('fa-check');
+    }
+
+    // Set or remove error classes
+    $scope.errorClass = function (control, method) {
+      if ($scope.onboardForm[control]!=undefined && $scope.onboardForm[control].$invalid && !$scope.onboardForm[control].$pristine) {
+        $scope.isDisabledNext = true;
+        return (method == "class" ? 'has-error' : true);
+      } else {
+        $scope.isDisabledNext = false;
+      }
     }
   }
 ]);

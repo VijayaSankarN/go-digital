@@ -5,6 +5,7 @@ angular.module('onboard').factory('onboardServices', function($http) {
       getFields = '/api/onboard/getFields',
       getSelectOptions = '/api/onboard/getSelectOptions',
       getFormData = 'api/onboard/getFormData',
+      updateFormData = 'api/onboard/updateFormData',
       dataFactory = {};
 
   dataFactory.getPages = function() {
@@ -36,6 +37,13 @@ angular.module('onboard').factory('onboardServices', function($http) {
       }
     }
     return $http.get(getFormData, formIdParam);
+  }
+
+  dataFactory.updateFormData = function(formData) {
+    var formDataParam = {
+      formData: formData
+    }
+    return $http.post(updateFormData, formDataParam);
   }
 
   return dataFactory;
