@@ -14,7 +14,7 @@
 				<div class="form-group" ng-repeat="field in fieldLabels">
 					<label class="col-sm-4 control-label" style="font-weight: 500">{{field.field_label}}</label>
 					<div class="col-sm-7 text-left border-bottom">
-						<label class="control-label">{{formData[(field.field_name | lowercase)] || '-'}}</label>
+						<label class="control-label contentArea">{{formData[(field.field_name | lowercase)] || '-'}}</label>
 					</div>
 				</div>
 			</div>
