@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('onboard').controller('onboardController', ['$rootScope', '$scope', '$state', '$location', 'onboardServices',
-  function ($rootScope, $scope, $state, $location, onboardServices) {
+angular.module('onboard').controller('onboardController', ['$rootScope', '$scope', '$state', '$window', '$location', 'onboardServices',
+  function ($rootScope, $scope, $state, $window, $location, onboardServices) {
 
     $scope.formId = $state.params.formId;
     $scope.pageId = $state.params.pageId;
@@ -14,8 +14,15 @@ angular.module('onboard').controller('onboardController', ['$rootScope', '$scope
     $scope.isDisabledNext = true;
 
     // Check if the form is valid for the user, otherwise redirect to dashboard
-    if($rootScope.allowedFormIds == undefined || $rootScope.allowedFormIds.indexOf($scope.formId*1) < 0) {
-      // $location.path("/dashboard");
+    if($rootScope.allowedFormIds == undefined) {
+      if($window.localStorage.getItem("GO_allowedFormIds") === null) {
+        $location.path("/dashboard");
+      }
+      $rootScope.allowedFormIds = $window.localStorage.getItem("GO_allowedFormIds");
+    }
+    
+    if($rootScope.allowedFormIds.indexOf($scope.formId*1) < 0) {
+      $location.path("/dashboard");
     }
 
     // Get pages
@@ -49,7 +56,7 @@ angular.module('onboard').controller('onboardController', ['$rootScope', '$scope
       });
     };
 
-    // Get fields inside the page
+    // Get fields inside the page (labels)
     $scope.getFields = function(pageId) {
       onboardServices.getFields(pageId).then(function (response) {
 
@@ -101,8 +108,8 @@ angular.module('onboard').controller('onboardController', ['$rootScope', '$scope
         $scope.formData = response.data;
         var last_page_completed = response.data.last_page_completed || $scope.pageCollection[0];
 
-        if($scope.pageId != last_page_completed) {
-          // $location.path('/onboard/'+formId+'/'+last_page_completed);
+        if($scope.getPosition($scope.pageId)<0) {
+          $location.path('/onboard/'+formId+'/'+last_page_completed);
         }
 
       }, function (error) {
@@ -110,6 +117,7 @@ angular.module('onboard').controller('onboardController', ['$rootScope', '$scope
       });
     }
 
+    // Update form data to temporary database
     $scope.pageSubmit = function(isValid) {
       $scope.isDisabledNext = true;
       $scope.formData.last_page_completed = $scope.pageId;
@@ -122,8 +130,7 @@ angular.module('onboard').controller('onboardController', ['$rootScope', '$scope
         onboardServices.updateFormData($scope.formData).then(function (response) {
           if(response.data) {
             if(isLastPage) {
-              alert("Thanks for submission!");
-              $location.path("/dashboard");
+              $scope.pushToSF();
             } else {
               $location.path($scope.nextLink);              
             }
@@ -135,6 +142,25 @@ angular.module('onboard').controller('onboardController', ['$rootScope', '$scope
         alert("Please fix some errors in the form!");
         $scope.isDisabledNext = true;
       }
+    }
+
+    // Push data to Salesforce
+    $scope.pushToSF = function() {
+      $scope.isDisabledNext = true;
+      delete $scope.formData.onboard_form_submission_id;
+      delete $scope.formData.last_page_completed;
+      delete $scope.formData.user_id;
+      delete $scope.formData.form_status;
+      delete $scope.formData.active;
+
+      onboardServices.submitFormData($scope.formData).then(function (response) {
+        if(response.data) {
+          alert("Thanks for submission!");
+          $location.path("/dashboard");
+        }
+      }, function (error) {
+        $scope.error = error.message;
+      });
     }
 
     // Get the current position of the page
@@ -162,4 +188,4 @@ angular.module('onboard').controller('onboardController', ['$rootScope', '$scope
       }
     }
   }
-]);
+  ]);

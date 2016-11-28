@@ -53,6 +53,27 @@
 };
 
 /**
+ * List all fields in the onboard form
+ */
+ exports.getLabels = function(req, res) {
+
+  db.field_mapping.findAll({
+    attributes: ['field_label', 'field_name'],
+    where: {
+      active: true
+    }
+  })
+  .then(function(labels) {
+    return res.json(labels);
+  })
+  .catch(function(err) {
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+  });
+};
+
+/**
  * List options for the select field
  */
  exports.getSelectOptions = function(req, res) {
@@ -116,6 +137,24 @@
   }).then(function(updateStatus){
     return res.json(updateStatus);                              
   }).catch(function(err) {
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+  });
+};
+
+/**
+ * Submit data to Salesforce
+ */
+ exports.submitFormData = function(req, res) {
+
+  var formData = req.body.formData;
+
+  db.onboardformmodel__c.build(formData)
+  .save().then(function(sfCreate) {
+    return res.json(sfCreate);                              
+  })
+  .catch(function(err) {
     return res.status(400).send({
       message: errorHandler.getErrorMessage(err)
     });

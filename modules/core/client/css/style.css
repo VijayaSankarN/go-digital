@@ -40,6 +40,15 @@ h4 {
 
 img { max-width: 100%; }
 
+.border-bottom {
+	border-bottom: 1px solid;
+}
+
+/*Override datatables*/ 
+div.dataTables_info {
+    padding-top: 0px;
+}
+
 ::-moz-selection { background: #2292d0; color: #fff; text-shadow: none; }
 ::selection { background: #2292d0; color: #fff; text-shadow: none; }
 

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$state', '$http', 'Authentication',
-  function ($scope, $state, $http, Authentication) {
+angular.module('core').controller('HeaderController', ['$rootScope', '$scope', '$state', '$location', '$http', '$window', 'Authentication',
+  function ($rootScope, $scope, $state, $location, $http, $window, Authentication) {
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
@@ -10,7 +10,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$htt
     $scope.signout = function() {
       $http.get('/api/user/signout').success(function(){
         Authentication.user = $scope.authentication.user = null;
-        $state.go('login');
+        $window.localStorage.removeItem("GO_allowedToView");
+        $window.localStorage.removeItem("GO_allowedFormIds");
+        $location.path('login');
       });
     };
 
@@ -18,6 +20,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$htt
     $scope.verify = function() {
       $http.get('/api/user/verify').success(function(response){
         Authentication.user = response.user;
+        $rootScope.userDetails = response.user;
       });
     };
 

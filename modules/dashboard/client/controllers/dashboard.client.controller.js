@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('dashboard').controller('dashboardController', ['$rootScope', '$scope', '$location', '$state', 'dashboardServices',
-  function ($rootScope, $scope, $location, $state, dashboardServices) {
+angular.module('dashboard').controller('dashboardController', ['$rootScope', '$scope', '$location', '$state', '$window', 'dashboardServices', 'DTOptionsBuilder',
+  function ($rootScope, $scope, $location, $state, $window, dashboardServices, DTOptionsBuilder) {
 
     var userId = $rootScope.userDetails.site_user_id;
 
@@ -10,6 +10,7 @@ angular.module('dashboard').controller('dashboardController', ['$rootScope', '$s
     $scope.dtOptions = '';
     $scope.isDisabled = false;
     $rootScope.allowedFormIds = [];
+    $rootScope.allowedToView = [];
 
     // Get forms list
     $scope.getForms = function() {
@@ -20,17 +21,15 @@ angular.module('dashboard').controller('dashboardController', ['$rootScope', '$s
         formsList.forEach(function(val, index) {
           if(val.form_status) {
             $scope.submittedList.push(val);
+            $rootScope.allowedToView.push(val.onboard_form_submission_id);
           } else {
             $scope.pendingList.push(val);
             $rootScope.allowedFormIds.push(val.onboard_form_submission_id);
           }
         });
 
-
-        // Load Datatable
-        // $("table").DataTable({
-        //   dom: '<"small col-sm-6"l><"small col-sm-6"f><"height-50">t<"height-20"><"small col-sm-6"i><"small col-sm-6"p>'
-        // });
+        $window.localStorage.setItem("GO_allowedToView", $rootScope.allowedToView);
+        $window.localStorage.setItem("GO_allowedFormIds", $rootScope.allowedFormIds);
 
       }, function (error) {
         $scope.error = error.message;
@@ -46,12 +45,27 @@ angular.module('dashboard').controller('dashboardController', ['$rootScope', '$s
         
         var formId = response.data.onboard_form_submission_id;
 
+        $rootScope.allowedFormIds.push(formId);
+        $window.localStorage.setItem("GO_allowedFormIds", $rootScope.allowedFormIds);
+
         $location.path('/onboard/'+formId);
 
       }, function (error) {
         $scope.error = error.message;
       });
     }
+
+    // Bootstrap initializer
+    $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap()
+        .withBootstrapOptions({
+            pagination: {
+                classes: {
+                    ul: 'pagination pagination-sm'
+                }
+            },
+
+        })
+        .withDOM('<"small col-sm-6"l><"small col-sm-6"f><"height-50">t<"row"<"small col-sm-6"i><"small col-sm-6"p>>');
 
   }
 ]);

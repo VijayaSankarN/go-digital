@@ -18,7 +18,8 @@ exports.getForms = function(req, res) {
     where: {
       user_id: userId,
       active: true
-    }
+    },
+    order: [['updatedAt', 'DESC']]
   })
   .then(function(forms) {
     return res.json(forms);

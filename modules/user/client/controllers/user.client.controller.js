@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('user').controller('AuthenticationController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication',
-  function ($scope, $state, $http, $location, $window, Authentication) {
+angular.module('user').controller('AuthenticationController', ['$rootScope', '$scope', '$state', '$http', '$location', '$window', 'Authentication',
+  function ($rootScope, $scope, $state, $http, $location, $window, Authentication) {
 
     // Get an eventual error defined in the URL query string:
     $scope.error = $location.search().err;
@@ -12,7 +12,6 @@ angular.module('user').controller('AuthenticationController', ['$scope', '$state
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
-
         return false;
       }
 
@@ -20,6 +19,7 @@ angular.module('user').controller('AuthenticationController', ['$scope', '$state
 
         // If successful we assign the response to the global user model
         $scope.authentication.user = Authentication.user = response;
+        $rootScope.userDetails = response;
 
         $window.user = response;
 
@@ -31,6 +31,7 @@ angular.module('user').controller('AuthenticationController', ['$scope', '$state
 
     $scope.errorClass = function (control, method) {
         if ($scope.userForm[control].$invalid && !$scope.userForm[control].$pristine) {
+
             return (method == "class" ? 'has-error' : true);
         }
     };

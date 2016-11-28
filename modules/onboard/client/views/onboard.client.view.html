@@ -8,6 +8,7 @@
 			</div>
 			
 			<p>On-Boarding Form</p>
+			<p><a href="/dashboard" class="btn btn-next btn-xs">Back to Dashboard</a></p>
 			<div class="f1-steps">
 				<div class="f1-progress">
 					<div class="f1-progress-line" style="width:{{progressBar}}%"></div>
@@ -25,11 +26,11 @@
 					<label class="col-sm-3 control-label">{{field.field_label}}</label>
 					<div class="col-sm-8 text-left">
 						<input type="text" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="text" required>
-						<input type="number" name="{{field.field_name}}" string-to-number ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="number" required>
-						<input type="date" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="date" required>
-						<input type="email" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="email" required>
-						<input type="url" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="url" required>
-						<input type="password" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" value="{{formData[(field.field_name | lowercase)]}}" ng-switch-when="password" required>
+						<input type="number" name="{{field.field_name}}" string-to-number ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="number" required>
+						<input type="date" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="date" required>
+						<input type="email" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="email" required>
+						<input type="url" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="url" required>
+						<input type="password" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="password" required>
 						<div class="checkbox" ng-switch-when="checkbox">
 							<label></label>
 							<input type="checkbox" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" id="{{field.field_name}}" ng-checked="formData[(field.field_name | lowercase)]"> {{field.field_label}}
@@ -43,8 +44,8 @@
 				</div>
 				<div class="f1-buttons">
 					<a ng-href="{{prevLink}}" class="btn btn-previous" ng-if="dispPrev">Previous</a>
-					<button ng-disabled="isDisabledNext" class="btn btn-next" ng-if="dispNext">Next</button>
-					<button ng-disabled="isDisabledNext" ng-click="submitAction()" class="btn btn-next" ng-if="dispSubmit">Submit</button>
+					<button ng-disabled="onboardForm.$invalid" class="btn btn-next" ng-if="dispNext">Next</button>
+					<button ng-disabled="onboardForm.$invalid" ng-click="submitAction()" class="btn btn-next" ng-if="dispSubmit">Submit</button>
 				</div>
 			</fieldset>
 		</form>
