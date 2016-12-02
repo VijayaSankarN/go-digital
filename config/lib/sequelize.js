@@ -22,7 +22,7 @@ if(env == 'development') {
   var sequelize = new Sequelize(config.db.options.dburl, {
     dialect: 'postgres',
     protocol: 'postgres',
-    timezone: 'America/Phoenix',
+    timezone: '-07:00',
     dialectOptions: {
       ssl: true
     }
