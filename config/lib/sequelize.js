@@ -16,13 +16,13 @@ if(env == 'development') {
     logging: config.db.options.logging, 
     host: config.db.options.host,
     port: config.db.options.port,
-    timezone: 'Asia/Kolkata'
+    timezone: '+00:00'
   });
 } else {
   var sequelize = new Sequelize(config.db.options.dburl, {
     dialect: 'postgres',
     protocol: 'postgres',
-    timezone: '-07:00',
+    timezone: '+00:00',
     dialectOptions: {
       ssl: true
     }
