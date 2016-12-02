@@ -32,8 +32,8 @@
 						<input type="url" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="url" required>
 						<input type="password" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="password" required>
 						<div class="checkbox" ng-switch-when="checkbox">
-							<label></label>
-							<input type="checkbox" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" id="{{field.field_name}}" ng-checked="formData[(field.field_name | lowercase)]"> {{field.field_label}}
+							<input type="checkbox" name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" id="{{field.field_name}}" ng-checked="formData[(field.field_name | lowercase)]">
+							<label for="{{field.field_name}}"></label>
 						</div>
 						<textarea name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" placeholder="Enter {{field.field_label}}" class="form-control" id="{{field.field_name}}" ng-switch-when="textarea" required>{{formData[(field.field_name | lowercase)]}}</textarea>
 						<select name="{{field.field_name}}" ng-model="formData[(field.field_name | lowercase)]" class="form-control" id="{{field.field_name}}" ng-switch-when="select" required>
