@@ -12,18 +12,20 @@
  */
  exports.getPages = function(req, res) {
 
-  db.page.findAll({
-    where: {
-      active: true
-    },
-    order: 'priority'
-  })
-  .then(function(pages) {
-    return res.json(pages);
-  })
-  .catch(function(err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+  db.sequelizeReflect.createTableFromDatabase('pages').then(function(model) {
+    model.findAll({
+      where: {
+        active: true
+      },
+      order: 'priority'
+    })
+    .then(function(pages) {
+      return res.json(pages);
+    })
+    .catch(function(err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     });
   });
 };
@@ -35,19 +37,21 @@
 
   var pageId = req.query.pageId;
 
-  db.field_mapping.findAll({
-    where: {
-      page_id: pageId,
-      active: true
-    },
-    order: 'priority'
-  })
-  .then(function(fields) {
-    return res.json(fields);
-  })
-  .catch(function(err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+  db.sequelizeReflect.createTableFromDatabase('field_mappings').then(function(model) {
+    model.findAll({
+      where: {
+        page_id: pageId,
+        active: true
+      },
+      order: 'priority'
+    })
+    .then(function(fields) {
+      return res.json(fields);
+    })
+    .catch(function(err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     });
   });
 };
@@ -57,18 +61,20 @@
  */
  exports.getLabels = function(req, res) {
 
-  db.field_mapping.findAll({
-    attributes: ['field_label', 'field_name'],
-    where: {
-      active: true
-    }
-  })
-  .then(function(labels) {
-    return res.json(labels);
-  })
-  .catch(function(err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+  db.sequelizeReflect.createTableFromDatabase('field_mappings').then(function(model) {
+    model.findAll({
+      attributes: ['field_label', 'field_name'],
+      where: {
+        active: true
+      }
+    })
+    .then(function(labels) {
+      return res.json(labels);
+    })
+    .catch(function(err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     });
   });
 };
@@ -80,18 +86,20 @@
 
   var fieldId = req.query.fieldId;
 
-  db.select_value.findAll({
-    where: {
-      field_mapping_id: fieldId,
-      active: true
-    }
-  })
-  .then(function(options) {
-    return res.json(options);
-  })
-  .catch(function(err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+  db.sequelizeReflect.createTableFromDatabase('select_values').then(function(model) {
+    model.findAll({
+      where: {
+        field_mapping_id: fieldId,
+        active: true
+      }
+    })
+    .then(function(options) {
+      return res.json(options);
+    })
+    .catch(function(err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     });
   });
 };
@@ -103,21 +111,23 @@
 
   var formId = req.query.formId;
 
-  db.onboard_form_submission.findOne({
-    where: {
-      onboard_form_submission_id: formId,
-      active: true
-    }
-  })
-  .then(function(formData) {
-    delete formData.dataValues.active;
-    delete formData.dataValues.createdAt;
-    delete formData.dataValues.updatedAt;
-    return res.json(formData);
-  })
-  .catch(function(err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+  db.sequelizeReflect.createTableFromDatabase('onboard_form_submissions').then(function(model) {
+    model.findOne({
+      where: {
+        onboard_form_submission_id: formId,
+        active: true
+      }
+    })
+    .then(function(formData) {
+      delete formData.dataValues.active;
+      delete formData.dataValues.createdAt;
+      delete formData.dataValues.updatedAt;
+      return res.json(formData);
+    })
+    .catch(function(err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     });
   });
 };
@@ -129,16 +139,18 @@
 
   var formData = req.body.formData;
 
-  db.onboard_form_submission.update(formData,
-  {
-    where: {
-      onboard_form_submission_id: formData.onboard_form_submission_id 
-    }
-  }).then(function(updateStatus){
-    return res.json(updateStatus);                              
-  }).catch(function(err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+  db.sequelizeReflect.createTableFromDatabase('onboard_form_submissions').then(function(model) {
+    model.update(formData,
+    {
+      where: {
+        onboard_form_submission_id: formData.onboard_form_submission_id 
+      }
+    }).then(function(updateStatus){
+      return res.json(updateStatus);                              
+    }).catch(function(err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     });
   });
 };
@@ -150,13 +162,15 @@
 
   var formData = req.body.formData;
 
-  db.onboardformmodel__c.build(formData)
-  .save().then(function(sfCreate) {
-    return res.json(sfCreate);                              
-  })
-  .catch(function(err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+  db.sequelizeReflect.createTableFromDatabase('onboardformmodel__c').then(function(model) {
+    model.build(formData)
+    .save().then(function(sfCreate) {
+      return res.json(sfCreate);                              
+    })
+    .catch(function(err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     });
   });
 };

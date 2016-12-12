@@ -4,7 +4,8 @@ var config = require('../config'),
 env = process.env.NODE_ENV || 'development',
 fs = require('fs'),
 path = require('path'),
-Sequelize = require('sequelize');
+Sequelize = require('sequelize'),
+SequelizeReflect = require('sequelize-reflect');
 
 var db = {};
 
@@ -33,7 +34,7 @@ if(env == 'development') {
 
 // Import models
 config.files.server.models.forEach(function(modelPath) {
-  var model = sequelize.import(path.resolve(modelPath));9
+  var model = sequelize.import(path.resolve(modelPath));
   db[model.name] = model;
 });
 
@@ -48,5 +49,8 @@ Object.keys(db).forEach(function(modelName) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+var sequelizeReflect = new SequelizeReflect(db.sequelize);
+
+db.sequelizeReflect = sequelizeReflect;
 
 module.exports = db;
